@@ -304,13 +304,6 @@ nav a:hover::after {
   max-width: 200px;
 }
 
-.quick-link-btn:hover {
-  background: var(--primary-dark);
-  color: var(--secondary-light);
-  transform: translateY(-3px);
-  box-shadow: var(--shadow);
-}
-
 /* News Carousel */
 .carousel-container {
   max-width: var(--container-width);
@@ -370,13 +363,6 @@ nav a:hover::after {
   font-weight: 600;
   transition: all var(--transition-normal);
   margin-top: var(--spacing-md);
-}
-
-.carousel-btn:hover {
-  background: var(--primary-dark);
-  color: var(--secondary-light);
-  transform: translateY(-3px);
-  box-shadow: var(--shadow);
 }
 
 .carousel-controls {
