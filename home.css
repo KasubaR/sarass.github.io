@@ -700,3 +700,41 @@ nav a:hover::after {
   justify-content: center;
   align-items: center;
 }
+
+@media (max-width: 992px) {
+  nav {
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    width: 100%;
+    height: calc(100vh - var(--header-height));
+    background: var(--white);
+    flex-direction: column;
+    padding: var(--spacing-xl);
+    transform: translateX(100%);
+    transition: transform var(--transition-normal);
+    z-index: var(--z-header);
+    overflow-y: auto;
+  }
+
+  nav.active {
+    transform: translateX(0);
+  }
+
+  nav a {
+    margin: var(--spacing-md) 0;
+    padding: var(--spacing-md);
+    font-size: var(--font-size-lg);
+    border-bottom: 1px solid var(--gray-light);
+    width: 100%;
+    text-align: center;
+  }
+
+  .mobile-menu-btn {
+    display: block;
+  }
+
+  .apply-btn {
+    display: none;
+  }
+}

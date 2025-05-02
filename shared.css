@@ -205,6 +205,12 @@ code {
     padding: 0 var(--spacing-lg);
 }
 
+/* No-scroll utility class */
+.no-scroll {
+    overflow: hidden;
+}
+
+
 /* Grid System */
 .grid {
     display: grid;
@@ -746,11 +752,15 @@ nav a.active::after {
 
     /* Adjust page banner margin to account for fixed header */
     .page-banner {
-        margin-top: var(--header-height);
-        height: auto;
-        min-height: 50vh;
-        padding: 40px var(--spacing-md);
-    }
+        height: 50vh;
+        background: linear-gradient(rgba(26, 93, 26, 0.8), rgba(0, 0, 0, 0.7)),
+          url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1') center/cover no-repeat;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: var(--header-height); /* This ensures space for the fixed header */
+        padding: 0 var(--spacing-md);
+      }
 
     .banner-content {
         padding: 20px;

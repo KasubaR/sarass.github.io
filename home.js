@@ -14,7 +14,6 @@ const handleError = (error, message) => {
   return null;
 };
 
-// Mobile Menu Toggle
 const initMobileMenu = () => {
   const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
   const nav = document.querySelector('nav');
@@ -28,13 +27,7 @@ const initMobileMenu = () => {
     const isExpanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true';
     mobileMenuBtn.setAttribute('aria-expanded', !isExpanded);
     nav.classList.toggle('active');
-
-    // Toggle body scroll
-    if (!isExpanded) {
-      body.style.overflow = 'hidden';
-    } else {
-      body.style.overflow = '';
-    }
+    body.classList.toggle('no-scroll');
   };
 
   // Click handler
@@ -55,7 +48,7 @@ const initMobileMenu = () => {
       !mobileMenuBtn.contains(e.target)) {
       mobileMenuBtn.setAttribute('aria-expanded', 'false');
       nav.classList.remove('active');
-      body.style.overflow = '';
+      body.classList.remove('no-scroll');
     }
   });
 
@@ -64,7 +57,7 @@ const initMobileMenu = () => {
     link.addEventListener('click', () => {
       mobileMenuBtn.setAttribute('aria-expanded', 'false');
       nav.classList.remove('active');
-      body.style.overflow = '';
+      body.classList.remove('no-scroll');
     });
   });
 };
