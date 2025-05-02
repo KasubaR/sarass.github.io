@@ -1,143 +1,188 @@
-// Header scroll effect
-window.addEventListener('scroll', function () {
+// home.js - Specific functionality for the homepage
+
+// Animate elements on scroll
+document.addEventListener('DOMContentLoaded', function() {
+  // Header scroll effect
   const header = document.querySelector('header');
-  if (window.scrollY > 50) {
-    header.classList.add('scrolled');
-  } else {
-    header.classList.remove('scrolled');
+  const bannerSection = document.querySelector('.page-banner');
+  let lastScrollY = window.scrollY;
+  
+  // Function to handle header appearance on scroll
+  const handleHeaderScroll = () => {
+    const currentScrollY = window.scrollY;
+    
+    if (currentScrollY > 50) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+    
+    lastScrollY = currentScrollY;
+  };
+  
+  // Add scroll listener
+  window.addEventListener('scroll', handleHeaderScroll);
+  
+  // Initialize header state
+  handleHeaderScroll();
+  
+  // Animate quick links on scroll
+  const animateOnScroll = () => {
+    const elements = document.querySelectorAll('.quick-link-card, .section-header, .carousel-container');
+    
+    elements.forEach(element => {
+      const elementTop = element.getBoundingClientRect().top;
+      const windowHeight = window.innerHeight;
+      
+      if (elementTop < windowHeight - 100) {
+        element.style.opacity = '1';
+        element.style.transform = 'translateY(0)';
+      }
+    });
+  };
+  
+  // Set initial state for animation
+  document.querySelectorAll('.quick-link-card, .section-header, .carousel-container').forEach(element => {
+    element.style.opacity = '0';
+    element.style.transform = 'translateY(20px)';
+    element.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+  });
+  
+  // Add scroll listener for animations
+  window.addEventListener('scroll', animateOnScroll);
+  
+  // Run once to check for elements already in view
+  setTimeout(animateOnScroll, 100);
+  
+  // Apply Now button scroll effect
+  const applyBtn = document.querySelector('.apply-btn');
+  if (applyBtn) {
+    applyBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const targetId = this.getAttribute('href');
+      const targetElement = document.querySelector(targetId);
+      
+      if (targetElement) {
+        window.scrollTo({
+          top: targetElement.offsetTop - 80,
+          behavior: 'smooth'
+        });
+      }
+    });
+  }
+  
+  // Quick links hover effects
+  const quickLinkCards = document.querySelectorAll('.quick-link-card');
+  quickLinkCards.forEach(card => {
+    card.addEventListener('mouseenter', function() {
+      this.style.borderColor = getComputedStyle(document.documentElement).getPropertyValue('--secondary');
+    });
+    
+    card.addEventListener('mouseleave', function() {
+      this.style.borderColor = getComputedStyle(document.documentElement).getPropertyValue('--primary');
+    });
+  });
+  
+  // Make the quick link cards clickable (entire card)
+  quickLinkCards.forEach(card => {
+    const link = card.querySelector('.quick-link-btn');
+    if (link) {
+      const linkHref = link.getAttribute('href');
+      card.style.cursor = 'pointer';
+      
+      card.addEventListener('click', function(e) {
+        if (e.target !== link) {
+          window.location.href = linkHref;
+        }
+      });
+    }
+  });
+  
+  // Add accessibility improvements
+  const carouselSlides = document.querySelectorAll('.carousel-slide');
+  carouselSlides.forEach((slide, index) => {
+    // Add proper focus management for screen readers
+    slide.setAttribute('tabindex', '0');
+    slide.setAttribute('aria-hidden', index !== 0 ? 'true' : 'false');
+  });
+  
+  // Improve banner accessibility
+  if (bannerSection) {
+    bannerSection.setAttribute('role', 'banner');
+    bannerSection.setAttribute('aria-label', 'Welcome to Sarass Christian Academy');
   }
 });
 
-// Error handling utility
-const handleError = (error, message) => {
-  console.error(message, error);
-  return null;
-};
-
-const initMobileMenu = () => {
-  const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-  const nav = document.querySelector('nav');
+// Add a preloader
+window.addEventListener('load', function() {
   const body = document.body;
-
-  if (!mobileMenuBtn || !nav) {
-    return handleError(new Error('Mobile menu elements not found'), 'Mobile menu initialization failed');
-  }
-
-  const toggleMenu = () => {
-    const isExpanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true';
-    mobileMenuBtn.setAttribute('aria-expanded', !isExpanded);
-    nav.classList.toggle('active');
-    body.classList.toggle('no-scroll');
-  };
-
-  // Click handler
-  mobileMenuBtn.addEventListener('click', toggleMenu);
-
-  // Keyboard navigation
-  mobileMenuBtn.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      toggleMenu();
+  
+  // Create preloader element
+  const preloader = document.createElement('div');
+  preloader.className = 'preloader';
+  preloader.innerHTML = `
+    <div class="preloader-content">
+      <div class="spinner"></div>
+      <div class="logo-icon">SC</div>
+      <p>Loading...</p>
+    </div>
+  `;
+  
+  // Add preloader style
+  const style = document.createElement('style');
+  style.textContent = `
+    .preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--white);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
     }
-  });
-
-  // Close menu when clicking outside
-  document.addEventListener('click', (e) => {
-    if (nav.classList.contains('active') &&
-      !nav.contains(e.target) &&
-      !mobileMenuBtn.contains(e.target)) {
-      mobileMenuBtn.setAttribute('aria-expanded', 'false');
-      nav.classList.remove('active');
-      body.classList.remove('no-scroll');
+    
+    .preloader-content {
+      text-align: center;
     }
-  });
-
-  // Close menu when clicking a nav link
-  document.querySelectorAll('nav a').forEach(link => {
-    link.addEventListener('click', () => {
-      mobileMenuBtn.setAttribute('aria-expanded', 'false');
-      nav.classList.remove('active');
-      body.classList.remove('no-scroll');
-    });
-  });
-};
-
-// Carousel functionality
-const initCarousel = () => {
-  const carousel = document.querySelector('.carousel');
-  const slides = document.querySelectorAll('.carousel-slide');
-  const dots = document.querySelectorAll('.carousel-dot');
-  const prevBtn = document.querySelector('.carousel-prev');
-  const nextBtn = document.querySelector('.carousel-next');
-
-  if (!carousel || !slides.length || !dots.length || !prevBtn || !nextBtn) {
-    return handleError(new Error('Carousel elements not found'), 'Carousel initialization failed');
-  }
-
-  let currentSlide = 0;
-  const slideCount = slides.length;
-
-  const updateCarousel = () => {
-    carousel.style.transform = `translateX(-${currentSlide * 100}%)`;
-
-    // Update ARIA attributes
-    dots.forEach((dot, index) => {
-      dot.setAttribute('aria-selected', index === currentSlide);
-    });
-
-    slides.forEach((slide, index) => {
-      slide.setAttribute('aria-hidden', index !== currentSlide);
-    });
-  };
-
-  const nextSlide = () => {
-    currentSlide = (currentSlide + 1) % slideCount;
-    updateCarousel();
-  };
-
-  const prevSlide = () => {
-    currentSlide = (currentSlide - 1 + slideCount) % slideCount;
-    updateCarousel();
-  };
-
-  // Event listeners
-  prevBtn.addEventListener('click', prevSlide);
-  nextBtn.addEventListener('click', nextSlide);
-
-  dots.forEach((dot, index) => {
-    dot.addEventListener('click', () => {
-      currentSlide = index;
-      updateCarousel();
-    });
-  });
-
-  // Keyboard navigation for carousel
-  carousel.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft') {
-      prevSlide();
-    } else if (e.key === 'ArrowRight') {
-      nextSlide();
+    
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid rgba(26, 93, 26, 0.1);
+      border-radius: 50%;
+      border-top-color: var(--primary);
+      animation: spin 1s linear infinite;
+      margin: 0 auto 20px;
     }
-  });
-
-  // Auto play carousel
-  let carouselInterval = setInterval(nextSlide, 5000);
-
-  // Pause on hover
-  carousel.addEventListener('mouseenter', () => {
-    clearInterval(carouselInterval);
-  });
-
-  carousel.addEventListener('mouseleave', () => {
-    carouselInterval = setInterval(nextSlide, 5000);
-  });
-
-  // Initialize carousel
-  updateCarousel();
-};
-
-// Initialize all functionality when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-  initMobileMenu();
-  initCarousel();
+    
+    .preloader p {
+      color: var(--primary);
+      font-weight: 600;
+      margin-top: 10px;
+    }
+    
+    @keyframes spin {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  `;
+  
+  document.head.appendChild(style);
+  document.body.prepend(preloader);
+  
+  // Remove preloader after page is loaded
+  setTimeout(() => {
+    preloader.style.opacity = '0';
+    preloader.style.visibility = 'hidden';
+    
+    // Remove preloader completely after fade out
+    setTimeout(() => {
+      preloader.remove();
+    }, 500);
+  }, 800);
 });
