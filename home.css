@@ -5,29 +5,40 @@
   position: relative;
   overflow: hidden;
   transition: height var(--transition-normal);
-}
-
-.page-banner::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to right, rgba(26, 93, 26, 0.9) 0%, rgba(26, 93, 26, 0.7) 100%);
-  z-index: 1;
-  animation: fadeIn 1.5s ease-in-out;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(rgba(26, 93, 26, 0.8), rgba(0, 0, 0, 0.7)),
+    url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1') center/cover no-repeat;
+  margin-top: var(--header-height);
 }
 
 .banner-content {
   position: relative;
   z-index: 2;
   animation: slideUp 1s ease-out;
+  max-width: 900px;
+  padding: var(--spacing-xl);
+  text-align: center;
+  color: var(--white);
+}
+
+.banner-content h1 {
+  font-size: var(--font-size-xxxl);
+  margin-bottom: var(--spacing-lg);
+  line-height: 1.2;
+}
+
+.banner-content p {
+  font-size: var(--font-size-lg);
+  line-height: 1.6;
+  opacity: 0.95;
 }
 
 /* Quick Links Section */
 .quick-links {
-  padding: var(--spacing-xl) 0;
+  padding: var(--spacing-xxl) 0;
   background-color: var(--white);
   box-shadow: var(--shadow);
   position: relative;
@@ -39,7 +50,7 @@
 .quick-links-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: var(--spacing-lg);
+  gap: var(--spacing-xl);
   max-width: var(--container-width);
   margin: 0 auto;
   padding: 0 var(--spacing-lg);
@@ -48,7 +59,7 @@
 .quick-link-card {
   background-color: var(--white);
   border-radius: 8px;
-  padding: var(--spacing-lg);
+  padding: var(--spacing-xl);
   box-shadow: var(--shadow);
   transition: transform var(--transition-normal), box-shadow var(--transition-normal);
   display: flex;
@@ -258,35 +269,75 @@
   transition: all var(--transition-normal);
 }
 
-.carousel-dot.active, .carousel-dot:hover {
+.carousel-dot.active,
+.carousel-dot:hover {
   background-color: var(--primary);
+}
+
+/* Newsletter Form */
+.newsletter-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+
+.newsletter-form input {
+  padding: var(--spacing-md);
+  border: 1px solid var(--gray-light);
+  border-radius: 5px;
+  font-size: var(--font-size-md);
+}
+
+.newsletter-form .btn {
+  width: 100%;
 }
 
 /* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideUp {
-  from { 
+  from {
     opacity: 0;
     transform: translateY(30px);
   }
-  to { 
+
+  to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
 /* Responsive Adjustments */
+@media (max-width: 1200px) {
+  .banner-content h1 {
+    font-size: var(--font-size-xxl);
+  }
+
+  .banner-content p {
+    font-size: var(--font-size-md);
+  }
+}
+
 @media (max-width: 992px) {
   .quick-links {
     margin-top: -30px;
   }
-  
+
   .carousel {
     height: 500px;
+  }
+
+  .banner-content {
+    padding: var(--spacing-lg);
   }
 }
 
@@ -294,14 +345,31 @@
   .carousel {
     height: 550px;
   }
-  
+
   .carousel-image {
     height: 200px;
   }
-  
+
   .quick-links {
     margin-top: 0;
     border-radius: 0;
+  }
+
+  .banner-content h1 {
+    font-size: var(--font-size-xl);
+  }
+
+  .banner-content p {
+    font-size: var(--font-size-sm);
+  }
+
+  .quick-links-container {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+
+  .quick-link-card {
+    padding: var(--spacing-lg);
   }
 }
 
@@ -309,10 +377,50 @@
   .carousel {
     height: 600px;
   }
-  
+
   .carousel-arrow {
     width: 30px;
     height: 30px;
     font-size: 1rem;
+  }
+
+  .banner-content {
+    padding: var(--spacing-md);
+  }
+
+  .quick-link-card {
+    padding: var(--spacing-md);
+  }
+
+  .quick-link-icon {
+    font-size: 2rem;
+  }
+
+  .section-title {
+    font-size: var(--font-size-lg);
+  }
+
+  .section-subtitle {
+    font-size: var(--font-size-sm);
+  }
+}
+
+/* Touch-friendly elements */
+@media (hover: none) {
+
+  .quick-link-card:hover,
+  .carousel-btn:hover,
+  .carousel-arrow:hover {
+    transform: none;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
