@@ -1028,3 +1028,142 @@ nav a.active::after {
         height: 35vh;
     }
 }
+
+/* Additional CSS to fix mobile header issues */
+
+/* Fix mobile header display and overlap issues */
+@media (max-width: 768px) {
+    /* Ensure header has proper spacing and fixed position */
+    header {
+      padding: var(--spacing-sm) var(--spacing-md);
+      height: auto;
+      min-height: 60px;
+    }
+    
+    /* Make the header container more compact on mobile */
+    .header-container {
+      padding: 0;
+    }
+    
+    /* Adjust logo for mobile */
+    .logo-text {
+      font-size: var(--font-size-md);
+      max-width: 200px;
+    }
+    
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      font-size: var(--font-size-md);
+    }
+    
+    /* Make the mobile menu button more visible */
+    .mobile-menu-btn {
+      font-size: 1.8rem;
+      padding: var(--spacing-xs);
+      margin-right: -var(--spacing-xs);
+    }
+    
+    /* Mobile navigation menu styling */
+    nav.active {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding-top: 70px; /* Space for the header */
+    }
+    
+    nav.active a {
+      width: 80%;
+      text-align: center;
+      padding: var(--spacing-md);
+      margin: var(--spacing-xs) 0;
+      border-radius: 8px;
+      border: none;
+      background-color: var(--gray-light);
+    }
+    
+    nav.active a:hover,
+    nav.active a.active {
+      background-color: var(--primary);
+      color: var(--white);
+    }
+    
+    nav.active a::after {
+      display: none;
+    }
+    
+    /* Fix page layout by ensuring the banner has enough top margin */
+    .page-banner {
+      margin-top: 0;
+      padding-top: 60px;
+    }
+  }
+  
+  /* Very small screens (iPhone SE, etc.) */
+  @media (max-width: 375px) {
+    .logo-text {
+      font-size: 0.9rem;
+      max-width: 160px;
+    }
+    
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      font-size: 0.9rem;
+      margin-right: var(--spacing-xs);
+    }
+    
+    /* Reduce padding further */
+    header {
+      padding: var(--spacing-xs) var(--spacing-sm);
+    }
+    
+    /* Handle very small screen quick links */
+    .quick-link-card {
+      padding: var(--spacing-md);
+    }
+    
+    .quick-link-icon {
+      font-size: 2.5rem;
+    }
+    
+    /* Ensure banner text is readable */
+    .banner-content {
+      padding: var(--spacing-md);
+    }
+    
+    .banner-content h1 {
+      font-size: 1.5rem;
+    }
+    
+    .banner-content p {
+      font-size: 0.9rem;
+    }
+  }
+  
+  /* Fix for page scrolling when mobile menu is active */
+  body.no-scroll {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* Fix for apply button on mobile */
+  @media (max-width: 992px) {
+    .apply-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 100;
+      box-shadow: var(--shadow-lg);
+      display: block !important;
+      padding: var(--spacing-sm) var(--spacing-lg);
+      opacity: 0.9;
+    }
+    
+    .apply-btn:hover {
+      opacity: 1;
+    }
+  }

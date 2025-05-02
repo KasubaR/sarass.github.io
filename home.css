@@ -234,7 +234,7 @@
     
     .carousel {
       height: 350px;
-    border-radius: 8px;
+      border-radius: 8px;
     }
     
     .carousel-content {
@@ -251,6 +251,33 @@
     
     .section-subtitle {
       font-size: var(--font-size-md);
+    }
+    
+    /* Add spacing after banner to accommodate fixed header */
+    .page-banner {
+      padding-top: 70px; /* Matches header height */
+    }
+    
+    /* Ensure mobile navigation works properly */
+    nav.active {
+      display: flex !important;
+      flex-direction: column;
+      align-items: center;
+      top: 0;
+      height: 100vh;
+      background-color: var(--white);
+      padding-top: 80px;
+    }
+    
+    /* Make logo text smaller on mobile */
+    .logo-text {
+      font-size: var(--font-size-lg);
+    }
+    
+    /* Adjust quick links for better mobile spacing */
+    .quick-links-container {
+      gap: var(--spacing-lg);
+      padding: 0 var(--spacing-md);
     }
   }
   
@@ -271,5 +298,80 @@
     
     .section-header {
       margin-bottom: var(--spacing-xl);
+    }
+    
+    /* Fix mobile menu alignment */
+    .mobile-menu-btn {
+      display: block;
+      z-index: 1001;
+    }
+    
+    /* Adjust the header container for smaller screens */
+    .header-container {
+      padding: 0 var(--spacing-md);
+    }
+    
+    /* Improve spacing for carousel controls on small screens */
+    .carousel-prev {
+      left: var(--spacing-sm);
+    }
+    
+    .carousel-next {
+      right: var(--spacing-sm);
+    }
+    
+    /* Adjust banner content for smaller screens */
+    .banner-content h1 {
+      font-size: 1.8rem;
+    }
+    
+    .banner-content p {
+      font-size: 1rem;
+      padding: 0 var(--spacing-md);
+    }
+    
+    /* Fix footer layout on small screens */
+    .footer-container {
+      gap: var(--spacing-lg);
+    }
+    
+    /* Make sure quick links have proper spacing */
+    .quick-link-card {
+      margin-bottom: var(--spacing-md);
+    }
+    
+    /* Ensure the page doesn't overflow horizontally */
+    body {
+      overflow-x: hidden;
+    }
+  }
+  
+  /* Fix for very small screens */
+  @media (max-width: 375px) {
+    .logo-text {
+      font-size: var(--font-size-md);
+    }
+    
+    .logo-icon {
+      width: 35px;
+      height: 35px;
+      font-size: var(--font-size-md);
+    }
+    
+    .carousel {
+      height: 250px;
+    }
+    
+    .carousel-content {
+      padding: var(--spacing-md);
+    }
+    
+    .carousel-title {
+      font-size: var(--font-size-md);
+    }
+    
+    .carousel-btn {
+      padding: var(--spacing-xs) var(--spacing-md);
+      font-size: var(--font-size-sm);
     }
   }
